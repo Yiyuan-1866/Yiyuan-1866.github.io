@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>My New Hugo Site</title>
+    <link>https://yiyuan-1866.github.io/</link>
+    <description>Recent content on My New Hugo Site</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sat, 16 Dec 2023 22:37:59 +0100</lastBuildDate>
+    <atom:link href="https://yiyuan-1866.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>My First Post</title>
+      <link>https://yiyuan-1866.github.io/posts/my-first-post/</link>
+      <pubDate>Sat, 16 Dec 2023 22:37:59 +0100</pubDate>
+      <guid>https://yiyuan-1866.github.io/posts/my-first-post/</guid>
+      <description>Introduction This is bold text, and this is emphasized text.&#xA;Visit the Hugo website!</description>
+    </item>
+    <item>
+      <title>Cool Cat</title>
+      <link>https://yiyuan-1866.github.io/blog/cat/</link>
+      <pubDate>Tue, 28 Mar 2023 00:00:00 +0000</pubDate>
+      <guid>https://yiyuan-1866.github.io/blog/cat/</guid>
+      <description>A rose is either a woody perennial flowering plant of the genus Rosa, in the family Rosaceae, or the flower it bears.&#xA;There are over three hundred species and tens of thousands of cultivars.They form a group of plants that can be erect shrubs, climbing, or trailing, with stems that are often armed with sharp prickles.&#xA;Their flowers vary in size and shape and are usually large and showy, in colours ranging from white through yellows and reds.</description>
+    </item>
+    <item>
+      <title>Cool Kitty</title>
+      <link>https://yiyuan-1866.github.io/blog/kitty/</link>
+      <pubDate>Tue, 28 Mar 2023 00:00:00 +0000</pubDate>
+      <guid>https://yiyuan-1866.github.io/blog/kitty/</guid>
+      <description>A rose is either a woody perennial flowering plant of the genus Rosa, in the family Rosaceae, or the flower it bears.&#xA;There are over three hundred species and tens of thousands of cultivars.They form a group of plants that can be erect shrubs, climbing, or trailing, with stems that are often armed with sharp prickles.&#xA;Their flowers vary in size and shape and are usually large and showy, in colours ranging from white through yellows and reds.</description>
+    </item>
+    <item>
+      <title>About me</title>
+      <link>https://yiyuan-1866.github.io/about/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://yiyuan-1866.github.io/about/</guid>
+      <description>Hello , thankyou.</description>
+    </item>
+    <item>
+      <title>Contact</title>
+      <link>https://yiyuan-1866.github.io/contact/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://yiyuan-1866.github.io/contact/</guid>
+      <description>Mail me : cat@example.com</description>
+    </item>
+  </channel>
+</rss>
