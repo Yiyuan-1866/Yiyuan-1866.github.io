@@ -1,0 +1,363 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Cat">
+    <link rel="icon" type="image/x-icon" href="https://yiyuan-1866.github.io/img/logo.svg">
+    
+    <link rel="stylesheet" href="https://yiyuan-1866.github.io/css/style.min.1dac2dce58058802a69e8c1e3ae7a2820fa9411cff0cded4211b8a1403b3b8327c23f39304b5650b1ffe9b747ea64029f9c811425cf1ffa0eb081ab9ccec871b.css" integrity="sha512-HawtzlgFiAKmnoweOueigg&#43;pQRz/DN7UIRuKFAOzuDJ8I/OTBLVlCx/&#43;m3R&#43;pkAp&#43;cgRQlzx/6DrCBq5zOyHGw==" crossorigin="anonymous"> 
+    
+
+</head>
+
+<title>
+    
+     Gaussian Process | Exploring the Echoes
+   
+</title> 
+
+<body> 
+<header>
+    <div class="cat">
+     <h1><a href="https://yiyuan-1866.github.io/">Exploring the Echoes</a></h1>
+    
+     <ul class="header-link">
+       
+       <li><a class="link" href="/">Home</a></li>
+       
+       <li><a class="link" href="/posts/">Blog</a></li>
+       
+       <li><a class="link" href="/contact/">Contact</a></li>
+       
+       <li><a class="link" href="/about/">About</a></li>
+       
+     </ul>
+   </div>
+</header>
+
+l<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js"></script>
+
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement(document.body, {
+            delimiters: [
+                {left: "$$", right: "$$", display: true},
+                {left: "$", right: "$", display: false}
+            ]
+        });
+    });
+</script>
+<div id="content">
+
+<div class="container">
+		<article>
+			<h1 class="head-blog">Gaussian Process</h1>
+			<div class="time">Dec 17, 2023</div>
+			<div>
+				<p>You can locate the PDF format within this <a href="https://drive.google.com/file/d/1hlxFM5Y7lKTreuTAxQIYDIW5T2-ITi6E/view">link</a>.</p>
+<h1 id="1-motivations-why-gaussian">§1 Motivations: Why Gaussian?</h1>
+<h2 id="11-random-diffusion">§1.1 Random Diffusion</h2>
+<p>A particle experiences a random diffusion. Let $\tau$ be the time duration and $\rho(y)$ be the probability density at time $\tau$ where $y$ is the distance between original place. We can observe $\rho(y)$ satisfies the following property:</p>
+<p>$$
+\rho(y) \geqslant 0, \quad \int_{-\infty}^{+\infty} \rho(y) d y=1, \quad \rho(y)=\rho(-y)
+$$</p>
+<p>As a result, we can compute $\int_{-\infty}^{+\infty} y \rho(y) d y=0$ and let $D=\int_{-\infty}^{+\infty} y^{2} \rho(y) d y$. Now, let $f(x, t)$ be the probability density at place $x$ and time $t$ with the initial value $f(0,0)= m$. By Conservation Law, we have</p>
+<p>$$
+f(x, t+\tau)=\int_{-\infty}^{+\infty} f(x-y, t) p(y) d y
+$$</p>
+<p>By Taylor expansion,</p>
+<p>$$
+f(x, t+\tau)=f(x, t)+\frac{\partial f}{\partial t} \cdot \tau+o(\tau)
+$$</p>
+<p>$$
+f(x-y, \tau)=f(x, y)-\frac{\partial f}{\partial x} \cdot y+\frac{1}{2} \frac{\partial^2 f}{\partial x^2} y^2+o(y^2)
+$$</p>
+<p>plunge into conservation equation, we get</p>
+<p>$$
+\frac{\partial f}{\partial t} \cdot \tau=\frac{1}{2} \frac{\partial^{2} f}{\partial x^{2}} \cdot D
+$$</p>
+<p>Let $\frac{D}{2 \tau}=C$,</p>
+<p>$$
+\frac{\partial f}{\partial t}=C \cdot \frac{\partial^{2} f}{\partial x^{2}}
+$$</p>
+<p>Solve this partial differential equation, we get</p>
+<p>$$
+f(x, t)=\frac{1}{\sqrt{2 \pi C t}} \exp \left(-\frac{x^{2}}{2 C t}\right)
+$$</p>
+<h2 id="12-maximum-entropy">§1.2 Maximum Entropy</h2>
+<p>Definition 1.1. The Entropy of a random variable is the following integral</p>
+<p>$$
+H(x)=-\int_{-\infty}^{+\infty} f_{X}(x) \log f_{X}(x) d x
+$$</p>
+<p>Now, we want to find the random variable $X \in(-\infty,+\infty)$ such that the Entropy be the maximum under the following constraints:</p>
+<p>$$
+E(X)=\mu \quad E\left(X^{2}\right)=\sigma^{2}
+$$</p>
+<p>By Lagrange multiplier, we need optimize the following factorial:</p>
+<p>$$
+G(f) = -\int_{\mathbb{R}} f_{X}(x) \log f_{X}(x) dx + \lambda_{1} \left( \int_{\mathbb{R}} f_{X}(x) dx - 1 \right) +
+$$</p>
+<p>$$
+\lambda_{2} \left( \int_{\mathbb{R}} x f_{X}(x) dx - \mu \right) + \lambda_{3} \left( \int_{\mathbb{R}} x^2 f_{X}(x) dx - \sigma^2 \right)
+$$</p>
+<p>We use Variational Method to find optimal. Denote $f_{0}$ is optimal solution. Let $H(t)=$ $G\left(f_{0}+t g\right)$ where $t \in \mathbb{R}$ and $g$ is an arbitrary function. Since we have $H(0)=G\left(f_{0}\right) \geqslant$ $G\left(f_{0}+t g\right)=H(t)$, we deduce</p>
+<p>$$
+\left.\frac{\partial H(t)}{\partial t}\right|_{t=0}=0
+$$</p>
+<p>By computation, we have</p>
+<p>$$
+\frac{\partial H}{\partial t}\bigg|_{t=0} = \int g(-\log f + \lambda_1 + 1 + \lambda_2 x + \lambda_3 x^2) dx
+$$</p>
+<p>Since $g$ is an arbitrary function we have,</p>
+<p>$$
+\log f+\left(\lambda_{1}+1\right)+\lambda_{2} x+\lambda_{3} x^{2}=0
+$$</p>
+<p>Thus, we know</p>
+<p>$$
+f(x)=\exp \left(\lambda_{3} x^{2}+\lambda_{2} x+\lambda_{1}+1\right)
+$$</p>
+<p>which is Gaussian!</p>
+<p>Remark 1.2. Random Walk</p>
+<p>Remark 1.3. If we change the condition of Random Variabe to $X \in[0, \infty)$ and $\int x f_{X}(x) d x=$ $\mu$. Then, by similar discussion we use Maximum Entropy induce exponential distributing (No memory)</p>
+<p>$$
+\lambda \exp (-\lambda x) I_{(0, \infty)}(x)
+$$</p>
+<p>If the $X \in[a, b]$ with no moment constraint, then Maximum Entropy induce uniform distribution.</p>
+<h2 id="13-central-limit-theorem">§1.3 Central Limit Theorem</h2>
+<p>We recall Central Limit Theorem</p>
+<h2 id="theorem-14">Theorem 1.4</h2>
+<p>Let $X_{1}, X_{2}, \cdot, X_{n}$ be i.d.d random variable and $E\left(X_{k}\right)=0, \operatorname{Var}\left(X_{k}\right)=1$. Then,</p>
+<p>$$
+\frac{X_{1}+X_{2}+\cdots+X_{n}}{\sqrt{n}} \stackrel{n \rightarrow \infty}{\longrightarrow} \mathcal{N}(0,1)
+$$</p>
+<p>Remark 1.5. From above theorem, we can find Gaussian distribution is universal.</p>
+<p>Question 1.6. Recall Large Number law, compare it with Central Limit Theorem, and think about why they are different?</p>
+<p>Before we prove Central Limit Theorem, we recall characteristic function.</p>
+<p>Definition 1.7. Let $X$ be a random variable, $f_{X}(x)$ is its probability distribution. Then its characteristic function ${ }^{1}$ is</p>
+<p>$$
+\phi_{X}(\omega) = E(\exp (j \omega x)) = \int_{-\infty}^{\infty} \exp (j \omega x) f_{X}(x) , dx
+$$</p>
+<p>Now, we compute characteristic function of $X \sim \mathcal{N}\left(\mu, \sigma^{2}\right)$. Since $f_{X}(x)=\frac{1}{\sqrt{2 \pi} \sigma} \exp \left(-\frac{(x-\mu)^{2}}{2 \sigma^{2}}\right)$,</p>
+<p>$$
+\phi_{X}(\omega) = \frac{1}{\sqrt{2 \pi} \sigma} \int_{-\infty}^{\infty} \exp \left(-\frac{(x-\mu)^{2}}{2 \sigma^{2}} + j \omega x\right) dx
+$$
+$$
+\phantom{\phi_{X}(\omega) =      jjj} = \frac{1}{\sqrt{2 \pi} \sigma} \int_{-\infty}^{\infty} \exp \left(-\frac{1}{2 \sigma^{2}}(x - \mu - j \sigma^{2} \omega)^{2} + j \mu \omega - \frac{1}{2} \sigma^{2} \omega^{2}\right) dx
+$$
+$$
+\phantom{\phi_{X}(\omega) =} = \exp \left(j \mu \omega - \frac{1}{2} \sigma^{2} \omega^{2}\right) \left( \frac{1}{\sqrt{2 \pi} \sigma} \int_{-\infty}^{\infty} \exp \left(-\frac{1}{2 \sigma^{2}}(x - \mu - j \sigma^{2} \omega)^{2}\right) dx \right)
+$$
+$$
+\phantom{\phi_{X}(\omega) =} = \exp \left(j \mu \omega - \frac{1}{2} \sigma^{2} \omega^{2}\right)
+$$</p>
+<p>Question 1.8. How to compute $\frac{1}{\sqrt{2 \pi} \sigma} \int_{-\infty}^{+\infty} \exp \left(-\frac{1}{2 \sigma^{2}}\left(x-\mu-j \sigma^{2} \omega\right)^{2}\right) d x$ ? Which theorem in complex analysis we use?</p>
+<p>Remark 1.9. Why we use characteristic function to research random variable? There are many reasons.</p>
+<ul>
+<li>Firstly, Fourier Transformation is one to one. Thus Characteristic Function is &lsquo;Character&rsquo; of random variable.</li>
+<li>Secondly, it provide us a convenient way to deal with the sum of random variable. It&rsquo;s similar to Lagrange Transformation in ordinary differential equation.</li>
+<li>Third, you will see in Gaussian Distribution characteristic function avoid computing inverse of covariance matrix. It&rsquo;s much convenient!!!</li>
+</ul>
+<p>Proof. Since</p>
+<p>$$
+\phi_{\frac{X_{1}+\cdots+X_{n}}{\sqrt{n}}}(\omega)=\prod_{k=1}^{n} \phi_{X_{k}}\left(\frac{\omega}{\sqrt{n}}\right)=\phi_{X_{1}}^{n}\left(\frac{\omega}{\sqrt{n}}\right)
+$$</p>
+<p>and</p>
+<p>$$
+\phi\left(\frac{\omega}{\sqrt{n}}\right) = E\left(\exp \left(j \frac{\omega}{\sqrt{n}} X\right)\right)
+$$</p>
+<p>$$
+= E\left(1 + j \frac{\omega}{\sqrt{n}} X - \frac{1}{2} \frac{\omega^{2}}{n} X^{2} + o\left(\frac{1}{n}\right)\right)
+$$</p>
+<p>$$
+= 1 - \frac{\omega}{2 n} + o\left(\frac{1}{n}\right)
+$$<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup></p>
+<p>We conclude</p>
+<p>$$
+\phi_{\frac{X_{1}+\cdots+X_{n}}{\sqrt{n}}}(\omega)=\left(1-\frac{\omega^{2}}{2 n}+0\left(\frac{1}{n}\right)\right)^{n} \stackrel{n \rightarrow \infty}{\longrightarrow} \exp \left(-\frac{\omega^{2}}{2}\right)
+$$</p>
+<p>Thus,</p>
+<p>$$
+f_{\frac{X_{1}+\cdots+X_{n}}{\sqrt{n}}}(x) \stackrel{n \rightarrow \infty}{\longrightarrow} \frac{1}{\sqrt{2 \pi}} \exp \left(-\frac{x^{2}}{2}\right)
+$$</p>
+<p>Remark 1.10. Recall Law of Large Numbers: Let $X_{1}, X_{2}, \cdot, X_{n}$ be i.d.d random variable and $E\left(X_{k}\right)=m$. Then,</p>
+<p>$$
+\frac{X_{1}+X_{2}+\cdots+X_{n}}{n} \stackrel{n \rightarrow \infty}{\longrightarrow} m
+$$</p>
+<p>The proof is similar and we know when $\delta&gt;0$,</p>
+<p>$$
+\frac{X_{1}+\cdots+X_{n}}{n^{1+\delta}} \rightarrow 0 \quad(n \rightarrow \infty)
+$$</p>
+<p>According to the power of $n$ the average of random variables present different property: still random variable or fix number. So what is the critical point? The answer is $\sqrt{n \log n \log n}$.</p>
+<p>Finally, we consider discrete model for random diffusion. Let $X(t)$ be a stochastic process and $t=n \Delta t$. In every time period $\Delta t$ a particle will move $\Delta x$ with $50 %$ to right and $50 %$ to left. Denote $S_{n}$ be the step number to right.Then $S_{n}=X_{1}+X_{2}+\cdot+X_{n}$ where $X_{k}$ is Bernoulli distribution.</p>
+<p>Then,</p>
+<p>$$
+X(t) = S_{n} \cdot \Delta x + (n - S_{n})(-\Delta x)
+$$</p>
+<p>$$
+= (2 S_{n} - n) \Delta x
+$$</p>
+<p>It&rsquo;s easy to find $E(X(t))=0$ and</p>
+<p>$$
+\operatorname{Var}(X(t)) = (\Delta x)^{2} \operatorname{Var}(2 S_{n} - n)
+$$</p>
+<p>$$
+= 4(\Delta x)^{2} \operatorname{Var}(S_{n})
+$$</p>
+<p>$$
+= (\Delta x)^{2} n
+$$</p>
+<p>Now,</p>
+<p>$$
+X(t) = (2 S_{n} - n) \Delta x
+$$</p>
+<p>$$
+= \frac{S_{n} - \frac{n}{2}}{\sqrt{\frac{1}{4} n}} \cdot \sqrt{n} \Delta x
+$$</p>
+<p>Where $\sqrt{n} \Delta x=\Delta x \cdot \sqrt{\frac{t}{\Delta t}}=\sqrt{\frac{\Delta x^{2}}{\Delta t} \cdot t}$. If we let $\frac{\Delta x^{2}}{\Delta t} \rightarrow D$ when $\Delta t \rightarrow 0$, then</p>
+<p>$$
+X(t) \rightarrow \mathcal{N}(0,1) \sqrt{D t}=\mathcal{N}(0, \sqrt{D t})
+$$</p>
+<p>when $\Delta t \rightarrow 0$. This implies $f_{X}(x)=\frac{1}{\sqrt{2 \pi D t}} \exp \left(-\frac{x^{2}}{2 D t}\right)$</p>
+<h2 id="2-gaussian-process">§2 Gaussian Process</h2>
+<h2 id="21-basic-properties-of-gaussian-distribution-and-gaussian-process">§2.1 Basic Properties of Gaussian Distribution and Gaussian Process</h2>
+<p>Definition 2.1. A stochastic process $X(t)$ is a Gaussian process if for arbitrary $n \in \mathbb{Z}$ and arbitrary $t_{1} \leqslant t_{2} \leqslant \ldots \leqslant t_{n}, X=\left(X\left(t_{1}\right), \cdots, X\left(t_{n}\right)\right)^{\top} \sim \mathcal{N}(\mu, \Sigma)$</p>
+<p>When $n=1, X \sim \mathcal{N}(\mu, \sigma)$ we know $E(X)=\mu, \operatorname{Var}(X)=\sigma^{2}$ and</p>
+<p>$$
+f_{X}(x)=\frac{1}{\sqrt{2 \pi} \sigma} \exp \left(-\frac{(x-\mu)^{2}}{2 \sigma^{2}}\right)
+$$</p>
+<p>When $n=2, X \sim \mathcal{N}\left(\mu_{1}, \mu_{2}, \sigma_{1}, \sigma_{2}, \rho\right)$ we know $E\left(X_{i}\right)=\mu_{i}, \operatorname{Var}\left(X_{i}\right)=\sigma_{i}^{2}$ and $E\left(\left(X_{1}-\mu_{1}\right)\left(X_{2}-\mu_{2}\right)\right)=\rho$ where $\rho$ is the linear relationship of two random variables.</p>
+<p>$$
+f_{X_{1} X_{2}}\left(x_{1}, x_{2}\right) = \frac{1}{2 \pi \sigma_{1} \sigma_{2} \sqrt{1-\rho^{2}}}
+$$</p>
+<p>$$
+\cdot \exp \left(-\frac{1}{2(1-\rho^{2})}\left(\frac{(x_{1}-\mu_{1})^{2}}{\sigma_{1}^{2}} + \frac{(x_{2}-\mu_{2})^{2}}{\sigma_{2}^{2}} - 2 \rho \frac{(x_{1}-\mu_{1})(x_{2}-\mu_{2})}{\sigma_{1} \sigma_{2}}\right)\right)
+$$</p>
+<p>For higher dimensional Gaussian Distribution, we have</p>
+<p>$$
+f_{\mathbf{X}}\left(x_{1}, \ldots, x_{n}\right)=\frac{1}{\sqrt{(2 \pi)^{n} \operatorname{det} \boldsymbol{\Sigma}}} \exp \left(-\frac{1}{2}(\mathbf{x}-\boldsymbol{\mu})^{\mathrm{T}} \boldsymbol{\Sigma}^{-1}(\mathbf{x}-\boldsymbol{\mu})\right)
+$$</p>
+<p>where
+$$
+E(\mathbf{X}) = \boldsymbol{\mu} \in \mathbb{R}^{n}
+$$</p>
+<p>$$
+\boldsymbol{\Sigma} = E\left((\mathbf{X} - \boldsymbol{\mu})(\mathbf{X} - \boldsymbol{\mu})^{\top}\right)
+$$</p>
+<p>$$
+\Sigma_{i, j} = E[(X_{i} - \mu_{i})(X_{j} - \mu_{j})]
+$$</p>
+<p>Question 2.2. How to compute the integral $\int_{\mathbb{R}^{n}} f_{\mathbf{X}}\left(x_{1}, \ldots, x_{n}\right) d x_{1} \cdots d x_{n}{ }^{2}$ ? Hint: Since $\boldsymbol{\Sigma}$ is symmetric and positive defined, we have $\boldsymbol{\Sigma}=A^{\top} A$.</p>
+<h2 id="proposition-23">Proposition 2.3</h2>
+<p>If $\mathbf{X} \sim \mathcal{N}(\boldsymbol{\mu}, \boldsymbol{\Sigma})$, then the characteristic function of $\mathbf{X}$ is</p>
+<p>$$
+\phi_{\mathbf{X}}(\boldsymbol{\omega})=\exp \left(j \boldsymbol{\omega}^{\top} \boldsymbol{\mu}-\frac{1}{2} \boldsymbol{\omega}^{\top} \boldsymbol{\Sigma} \boldsymbol{\omega}\right)
+$$</p>
+<p>Remark 2.4. Notice we can avoid computing inverse of $\boldsymbol{\Sigma}$ in characteristic field!</p>
+<h2 id="22-linearity-of-gaussian-process">§2.2 Linearity of Gaussian Process</h2>
+<h2 id="theorem-25">Theorem 2.5</h2>
+<p>If $\mathbf{X} \sim \mathcal{N}(\boldsymbol{\mu}, \boldsymbol{\Sigma}), \mathbf{Y}=A \mathbf{X}$, then $\mathbf{Y} \sim \mathcal{N}\left(A \boldsymbol{\mu}, A^{\top} \boldsymbol{\Sigma} A\right)$,</p>
+<p>Proof.</p>
+<p>$$
+\phi_{\mathbf{Y}}(\boldsymbol{\omega}) = E\left(\exp \left(j \boldsymbol{\omega}^{\top} \mathbf{Y}\right)\right)
+$$</p>
+<p>$$
+= E\left(\exp \left(j \boldsymbol{\omega}^{\top} A \mathbf{X}\right)\right)
+$$</p>
+<p>$$
+= E\left(\exp \left(j(A \boldsymbol{\omega})^{\top} \mathbf{X}\right)\right)
+$$</p>
+<p>$$
+= \phi_{\mathbf{X}}\left(A^{\top} \boldsymbol{\omega}\right)
+$$</p>
+<p>$$
+= \exp \left(j \boldsymbol{\omega}^{\top} A \boldsymbol{\mu}-\frac{1}{2} \boldsymbol{\omega}^{\top} A \boldsymbol{\Sigma} A^{\top} \boldsymbol{\omega}\right)
+$$<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup></p>
+<h2 id="corollary-26">Corollary 2.6</h2>
+<p>If joint distribution is Gaussian, then marginal distribution is also Gaussian.</p>
+<p>However, the opposite of the above claim is not true.</p>
+<h2 id="example-27">Example 2.7</h2>
+<p>We want to find a distribution which is not Gaussian but its marginal distribution is Gaussian. Firstly, we let</p>
+<p>$$
+f_{X_{1} X_{2}}\left(x_{1}, x_{2}\right)=\frac{1}{2 \pi} \exp \left(-\frac{x_{1}^{2}+x_{2}^{2}}{2}\right)+k\left(x_{1}, x_{2}\right)
+$$</p>
+<p>We want find $k\left(x_{1}, x_{2}\right)$ satisfies</p>
+<p>$$
+\int_{-\infty}^{+\infty} k\left(x_{1}, x_{2}\right) d x_{1}=\int_{-\infty}^{+\infty} k\left(x_{1}, k_{2}\right) d x_{2}=0
+$$</p>
+<p>And we want $f_{X_{1} X_{2}}\left(x_{1}, x_{2}\right)$ is a probability density. Finally, we find</p>
+<p>$$
+f_{X_{1} X_{2}}\left(x_{1}, x_{2}\right)=\frac{1}{2 \pi} \exp \left(-\frac{x_{2}^{2}+x_{2}^{2}}{2}\right)\left(1+\sin x_{1} \sin x_{2}\right)
+$$</p>
+<p>is desired function.</p>
+<h2 id="theorem-28">Theorem 2.8</h2>
+<p>For a random vector $\mathbf{X} \in \mathbb{R}^{n}$, if $\forall \alpha \in \mathbb{R}^{n}$ we have $\alpha^{\top} \mathbf{X} \sim \mathcal{N}$, then $\mathbf{X}$ is Gaussian.</p>
+<p>Proof.</p>
+<p>$$
+\phi_{\mathbf{X}}(\boldsymbol{\omega}) = E\left(\exp \left(j \boldsymbol{\omega}^{\top} \mathbf{X}\right)\right)
+$$</p>
+<p>$$
+= \phi_{\boldsymbol{\omega}^{\top} \mathbf{X}}(1)
+$$</p>
+<p>$$
+= \exp \left(j \mu_{\boldsymbol{\omega}^{\top} \mathbf{X}} - \frac{1}{2} \sigma_{\boldsymbol{\omega}^{\top} \mathbf{X}}^{2}\right)
+$$</p>
+<p>$$
+\mu_{\boldsymbol{\omega}^{\top} \mathbf{X}} = E\left(\boldsymbol{\omega}^{\top} \mathbf{X}\right) = \boldsymbol{\omega}^{\top} \mathbf{X}
+$$</p>
+<p>$$
+\sigma_{\boldsymbol{\omega}^{\top} \mathbf{X}}^{2} = E\left(\left(\boldsymbol{\omega}^{\top} \mathbf{X} - \boldsymbol{\omega}^{\top} \boldsymbol{\mu}\right)^{2}\right)
+$$</p>
+<p>$$
+= \boldsymbol{\omega}^{\top} E\left((\mathbf{X} - \boldsymbol{\mu})(\mathbf{X} - \boldsymbol{\mu})^{\top}\right) \boldsymbol{\omega}
+$$</p>
+<p>$$
+= \boldsymbol{\omega}^{\top} \boldsymbol{\Sigma} \boldsymbol{\omega}
+$$</p>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<pre><code>${ }^{1}$ Since $f_{X}(x) \geq 0, \phi_{X}(w)$ is positive defined.
+</code></pre>
+&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></li>
+<li id="fn:2">
+<pre><code>${ }^{2}$ Notice classical result: $\int_{-\infty}^{+\infty} \exp \left(-\frac{1}{2} y^{2}\right) d y=\sqrt{2 \pi}$</code></pre>
+&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></li>
+</ol>
+</div>
+
+			</div>
+
+		</article>
+	</div>
+	<div class="blog container">
+   <div class="head-blog">
+    <h3>Related article</h3>
+   </div>
+<ul class="article-list">
+
+	
+<li class="post">      
+    <span>Mar 28, 2023 </span> 
+    <a class="blog-title" href="/blog/kitty/">Cool Kitty</a>
+</li>
+
+
+ </ul>
+</div>
+
+
+</div>
+<footer class="footer">
+    <p><a href="https://gohugo.io">Hugo Cat</a></p>
+    <p>Forkme on <a href="https://github.com/httpsecure/hugo-cat">Github</a></p>
+</footer>
+
+
+</body>
+</html>
