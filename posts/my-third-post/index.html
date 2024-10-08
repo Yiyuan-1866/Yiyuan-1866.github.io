@@ -14,7 +14,7 @@
 
 <title>
     
-     Poission Process | Exploring the Echoes
+     Poisson Process | Exploring the Echoes
    
 </title> 
 
@@ -56,326 +56,340 @@ l<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/kat
 
 <div class="container">
 		<article>
-			<h1 class="head-blog">Poission Process</h1>
+			<h1 class="head-blog">Poisson Process</h1>
 			<div class="time">Dec 17, 2023</div>
 			<div>
-				<p>You can locate the PDF format within this <a href="https://drive.google.com/file/d/1T3tmlrMIaD8xMnJ3-3D65IBBchsWfYiR/view">link</a>.</p>
+				<p>You can find the PDF version of this content <a href="https://drive.google.com/file/d/1T3tmlrMIaD8xMnJ3-3D65IBBchsWfYiR/view">here</a>.</p>
 <h2 id="1-basic-properties-of-poisson-processes">§1 Basic Properties of Poisson Processes</h2>
-<p>The Poisson process is the &lsquo;simplest&rsquo; counting process or point process denoted by $N(t)$ that counts the number of events (discrete states) that occur during a continuous time period. To analyze this process, we use the joint probability technique. Now, we begin to study the simplest counting process: Poisson Process.</p>
-<p>Definition 1.1. The Poisson process is a stochastic processes with the following features:</p>
+<p>The Poisson process is the simplest counting process, denoted by $ N(t) $, which counts the number of events (discrete states) that occur over a continuous time period. To analyze this process, we use joint probability techniques. We now begin studying the Poisson Process.</p>
+<h3 id="definition-11">Definition 1.1</h3>
+<p>A Poisson process is a stochastic process characterized by the following:</p>
 <ul>
-<li>$N(0)=0$</li>
-<li>Independent increment: For any $t_{1} \leqslant t_{2} \leqslant t_{3} \leqslant t_{4}$, the difference $N\left(t_{2}\right)-N\left(t_{1}\right)$ is independent of $N\left(t_{4}\right)-N\left(t_{3}\right)$.</li>
-<li>Stationary increment: For any $s \leqslant t, N(t)-N(s)$ is determined by $t-s$.</li>
-<li>Sparsity: $\frac{P(N(t) \geqslant 2)}{P(N(t)=1)}$ tends to zero as $t$ approaches zero.</li>
+<li>$ N(0) = 0 $</li>
+<li><strong>Independent Increments:</strong> For any $ t_1 \leq t_2 \leq t_3 \leq t_4 $, the difference $ N(t_2) - N(t_1) $ is independent of $ N(t_4) - N(t_3) $.</li>
+<li><strong>Stationary Increments:</strong> For any $ s \leq t $, the difference $ N(t) - N(s) $ depends only on $ t - s $.</li>
+<li><strong>Sparsity:</strong> As $ t \to 0 $, $ \frac{P(N(t) \geq 2)}{P(N(t)=1)} $ tends to zero.</li>
 </ul>
-<p>Since the Poisson distribution is discrete, we use the moment generating function as our primary technique.</p>
-<p>Definition 1.2. Let $X$ be a random variable, and its moment generating function is defined as $G_{X}(z)=E\left(z^{X}\right)$, where $z \in \mathbb{C}$.</p>
-<p>Question 1.3. Recall the definition of the characteristic function $\phi_{X}(\omega)=E(\exp (j \omega z))$. Compare it with $G_{X}(z)=E\left(z^{X}\right)$.</p>
+<p>Since the Poisson distribution is discrete, we use the moment generating function as our main tool.</p>
+<h3 id="definition-12">Definition 1.2</h3>
+<p>Let $ X $ be a random variable. Its moment generating function is defined as $ G_X(z) = E\left( z^X \right) $, where $ z \in \mathbb{C} $.</p>
+<h3 id="question-13">Question 1.3</h3>
+<p>Recall the definition of the characteristic function $ \phi_X(\omega) = E(\exp(j \omega X)) $. How does this compare to $ G_X(z) = E(z^X) $?</p>
 <h2 id="11-moment-generating-function-of-poisson-process">§1.1 Moment Generating Function of Poisson Process</h2>
-<p>To find the moment generating function of the Poisson process, we start with $G_{N(t)}(z)=$ $E\left(z^{N(t)}\right)$. Then,</p>
+<p>To find the moment generating function of the Poisson process, we begin with:</p>
 <p>$$
-\frac{d}{d t} G_{N(t)}(z) = \lim <em>{\Delta t \rightarrow 0} \frac{G</em>{N(t+\Delta t)}(z)-G_{N(t)}(z)}{\Delta t}
+G_{N(t)}(z) = E\left(z^{N(t)}\right)
+$$</p>
+<p>Then,</p>
+<p>$$
+\frac{d}{dt} G_{N(t)}(z) = \lim_{\Delta t \to 0} \frac{G_{N(t + \Delta t)}(z) - G_{N(t)}(z)}{\Delta t}
 $$</p>
 <p>$$
-= \lim _{\Delta t \rightarrow 0} \frac{E\left(z^{N(t+\Delta t)}-z^{N(t)}\right)}{\Delta t}
+= \lim_{\Delta t \to 0} \frac{E\left(z^{N(t + \Delta t)} - z^{N(t)}\right)}{\Delta t}
 $$</p>
 <p>$$
-= \lim _{\Delta t \rightarrow 0} \frac{E\left(z^{N(t)}\right) E\left(z^{N(\Delta t)}-1\right)}{\Delta t}
+= \lim_{\Delta t \to 0} \frac{E\left(z^{N(t)}\right) E\left(z^{N(\Delta t)} - 1\right)}{\Delta t}
 $$</p>
 <p>$$
-= G_{N(t)}(z) \lim _{\Delta t \rightarrow 0} \frac{E\left(z^{N(\Delta t)}-1\right)}{\Delta t} .
+= G_{N(t)}(z) \lim_{\Delta t \to 0} \frac{E\left(z^{N(\Delta t)} - 1\right)}{\Delta t}
 $$</p>
-<p>Now, we consider $E\left(z^{N(\Delta t)}-1\right)$ :</p>
+<p>Now, consider $ E\left(z^{N(\Delta t)} - 1\right) $:</p>
 <p>$$
-E\left(z^{N(\Delta t)}-1\right)=P(N(\Delta t)=0)-1+z P(N(\Delta t)=1)+\sum_{k \geqslant 2} z^{k} P(N(\Delta t)=k) .
+E\left(z^{N(\Delta t)} - 1\right) = P(N(\Delta t) = 0) - 1 + z P(N(\Delta t) = 1) + \sum_{k \geq 2} z^k P(N(\Delta t) = k)
 $$</p>
-<p>We can derive the following from this equation:</p>
+<p>From this, we derive:</p>
 <ol>
-<li>Let $g(t)=P(N(t)=0)$. Then, $g(t)=P(N(t)=0)=P(N(s)=0, N(t)=0)=$ $P(N(s)=0) P(N(t-s)=0)=g(s) g(t-s) \quad \forall 0 \leqslant s \leqslant t$. Thus, $g$ must have the form $C \cdot e^{-\lambda x}$. Since $g(0)=1$, we deduce that $P(N(\Delta t)=0)=e^{-\lambda \Delta t}$. Therefore, $P(N(\Delta t)=0)-1=-\lambda \Delta t+o(\Delta t)$.</li>
-<li>Since $P(N(\Delta t)=1)\left(1+\frac{P(N(\Delta t) \geqslant 2)}{P(N(\Delta t)=1)}\right)=1-P(N(\Delta t)=0)$. Let $\Delta t \rightarrow 0$, we get</li>
+<li>Let $ g(t) = P(N(t) = 0) $. Then, $ g(t) = P(N(t) = 0) = P(N(s) = 0, N(t) = 0) = P(N(s) = 0) P(N(t - s) = 0) = g(s) g(t - s) $, for all $ 0 \leq s \leq t $. Thus, $ g(t) $ has the form $ C \cdot e^{-\lambda t} $. Since $ g(0) = 1 $, we deduce that $ P(N(\Delta t) = 0) = e^{-\lambda \Delta t} $. Therefore, $ P(N(\Delta t) = 0) - 1 = -\lambda \Delta t + o(\Delta t) $.</li>
+<li>Since $ P(N(\Delta t) = 1)\left(1 + \frac{P(N(\Delta t) \geq 2)}{P(N(\Delta t) = 1)}\right) = 1 - P(N(\Delta t) = 0) $, letting $ \Delta t \to 0 $, we get:</li>
 </ol>
 <p>$$
-\lim _{\Delta t \rightarrow 0} P(N(\Delta t)=1)=\lambda \Delta t
+\lim_{\Delta t \to 0} P(N(\Delta t) = 1) = \lambda \Delta t
 $$</p>
 <ol start="3">
-<li>As $\Delta t \rightarrow 0, \frac{P(N(\Delta t) \geqslant 2)}{P(N(\Delta t)=1)} \rightarrow 0$, the series $\sum_{k=2} z^{k} P(N(\Delta t)=k) \rightarrow 0$ for any $|z| \leq 1$. Thus,</li>
+<li>As $ \Delta t \to 0 $, $ \frac{P(N(\Delta t) \geq 2)}{P(N(\Delta t) = 1)} \to 0 $. The series $ \sum_{k=2}^{\infty} z^k P(N(\Delta t) = k) \to 0 $ for any $ |z| \leq 1 $. Thus,</li>
 </ol>
 <p>$$
-\lim _{\Delta t \rightarrow 0} \frac{E\left(z^{N(\Delta t)}-1\right)}{\Delta t}=-\lambda+\lambda z=\lambda(z-1)
+\lim_{\Delta t \to 0} \frac{E\left(z^{N(\Delta t)} - 1\right)}{\Delta t} = -\lambda + \lambda z = \lambda (z - 1)
 $$</p>
-<p>Finally, we obtain the moment generating function of the Poisson process as:</p>
+<p>Finally, we obtain the moment generating function of the Poisson process:</p>
 <p>$$
-\begin{aligned}
-G_{N(t)}(z) &amp; =\exp (\lambda(z-1) t) \
-&amp; =\sum_{k=0}^{\infty} \frac{(\lambda z t)^{k}}{k !} \exp (-\lambda t) \
-&amp; =\sum_{k=0}^{\infty} \frac{(\lambda t)^{k}}{k !} \exp (-\lambda t) \cdot z^{k}
-\end{aligned}
+G_{N(t)}(z) = \exp(\lambda(z - 1) t)
 $$</p>
-<p>Thus, $P(N(t)=k)=\frac{(\lambda t)^{k}}{k !} \exp (-\lambda t)$, and we can conclude that the random variable $N(t)$ follows a Poisson distribution with parameter $\lambda t$. The intensity of the Poisson process is given by $\lambda=\frac{E(N(\lambda t))}{t}$.</p>
-<p>Question 1.4. Is the Poisson process wide-sense stationary?</p>
-<p>Remark 1.5. The Poisson process is not wide-sense stationary due to its jumping and waiting behavior, as shown in the following illustration.</p>
-<p>Now, we consider interval of two events.</p>
+<p>This implies that $ P(N(t) = k) = \frac{(\lambda t)^k}{k!} \exp(-\lambda t) $, showing that $ N(t) $ follows a Poisson distribution with parameter $ \lambda t $. The intensity of the Poisson process is $ \lambda = \frac{E(N(t))}{t} $.</p>
+<h3 id="question-14">Question 1.4</h3>
+<p>Is the Poisson process wide-sense stationary?</p>
+<h3 id="remark-15">Remark 1.5</h3>
+<p>The Poisson process is not wide-sense stationary due to its &ldquo;jumping&rdquo; and &ldquo;waiting&rdquo; behavior.</p>
+<p>Now, let’s consider the interval between two events.</p>
 <p>$$
-F_{T_{1}}(t)=P\left(T_{1} \leqslant t\right)=1-P(N(t)=0)=1-e^{-\lambda t} \quad(t \geqslant 0)
+F_{T_1}(t) = P(T_1 \leq t) = 1 - P(N(t) = 0) = 1 - e^{-\lambda t} \quad (t \geq 0)
 $$</p>
-<p>As a result, $f_{T_{1}}(t)=\lambda e^{-\lambda t}$. That&rsquo;s to say $T_{1}$ is exponential distribution.</p>
-<p>Question 1.6. Prove that $T_{1}, T_{2}, \cdots, T_{n}$ are independently and identically distributed as $\operatorname{Exp}(\lambda)$.</p>
-<p>Question 1.7. Denote the time of the $k$-th event as $S_{k}=\sum_{i=1}^{k} T_{i}$. Find the distribution of $S_{k}$.</p>
-<p>Solution 1.8. $\quad$ - The characteristic function of the sum of $k$ independent exponential random variables $T_{1}, T_{2}, \ldots, T_{k}$ with parameter $\lambda$ is the product of their individual characteristic functions. The characteristic function of an exponential distribution with parameter $\lambda$ is $\phi_{T_{i}}(\omega)=\frac{\lambda}{\lambda-j \omega}$. Therefore, we have $\phi_{S_{k}}(\omega)=\prod_{i=1}^{k} \phi_{T_{i}}(\omega)=$ $\left(\frac{\lambda}{\lambda-j \omega}\right)^{k}$.</p>
-<p>To find the probability distribution function of $S_{k}$, we take the inverse Fourier transform of its characteristic function:</p>
+<p>As a result, $ f_{T_1}(t) = \lambda e^{-\lambda t} $, which means $ T_1 $ follows an exponential distribution.</p>
+<h3 id="question-16">Question 1.6</h3>
+<p>Prove that $ T_1, T_2, \dots, T_n $ are independently and identically distributed as $ \text{Exp}(\lambda) $.</p>
+<h3 id="question-17">Question 1.7</h3>
+<p>Denote the time of the $ k $-th event as $ S_k = \sum_{i=1}^{k} T_i $. Find the distribution of $ S_k $.</p>
+<h3 id="solution-18">Solution 1.8</h3>
+<p>The characteristic function of the sum of $ k $ independent exponential random variables $ T_1, T_2, \dots, T_k $ with parameter $ \lambda $ is the product of their individual characteristic functions. The characteristic function of an exponential distribution with parameter $ \lambda $ is:</p>
 <p>$$
-\begin{aligned}
-f_{S_{k}}(x) &amp; =\frac{1}{2 \pi} \int_{-\infty}^{\infty}\left(\frac{\lambda}{\lambda-j \omega}\right)^{k} e^{j \omega x} d \omega \
-&amp; =\sum_{n=1}^{k} \operatorname{Res}\left(\frac{\lambda^{k}}{(\lambda-j \omega)^{k}} e^{j \omega x},-j \frac{\lambda}{n}\right) \
-&amp; =\sum_{n=1}^{k} \frac{j^{n} \lambda^{k}}{(n-1) !(k-n) !} e^{-\frac{\lambda}{n} x}
-\end{aligned}
+\phi_{T_i}(\omega) = \frac{\lambda}{\lambda - j\omega}
 $$</p>
-<p>This is the probability density function of a gamma distribution with shape parameter $k$ and scale parameter $\frac{1}{\lambda}$, denoted as $\Gamma\left(k, \frac{1}{\lambda}\right)$.</p>
-<ul>
-<li>The probability distribution function of the sum of $k$ independent exponential random variables $T_{1}, T_{2}, \ldots, T_{k}$ with parameter $\lambda$ is a gamma distribution with shape parameter $k$ and scale parameter $\frac{1}{\lambda}$, denoted as $\Gamma\left(k, \frac{1}{\lambda}\right)$. We can derive this result using the probability distribution of the number of events $N(x)$ that occur in time interval $[0, x]$.</li>
-</ul>
-<p>The number of events $N(x)$ follows a Poisson distribution with parameter $\lambda x$. Thus, the probability that $N(x)=n$ is $P(N(x)=n)=\frac{(\lambda x)^{n}}{n !} e^{-\lambda x}$. The probability that the sum of $k$ exponential random variables is less than or equal to $x$ is</p>
+<p>Thus, the characteristic function of $ S_k $ is:</p>
 <p>$$
-\begin{aligned}
-F_{S_{k}}(x) &amp; =P\left(S_{k} \leqslant x\right)=\sum_{n=k}^{\infty} P(N(x)=n) \
-&amp; =1-\sum_{n=0}^{k-1} P(N(x)=n) \
-&amp; =1-\sum_{n=0}^{k-1} \frac{(\lambda x)^{n}}{n !} e^{-\lambda x}
-\end{aligned}
+\phi_{S_k}(\omega) = \prod_{i=1}^{k} \phi_{T_i}(\omega) = \left( \frac{\lambda}{\lambda - j\omega} \right)^k
 $$</p>
-<p>Taking the derivative of $F_{S_{k}}(x)$ with respect to $x$ gives us the probability density function $f_{S_{k}}(x)$ of the gamma distribution, which is</p>
-<p>$$
-f_{S_{k}}(x)=\lambda \frac{(\lambda x)^{k-1}}{(k-1) !} e^{-\lambda x}
-$$</p>
-<p>This completes the derivation of the probability distribution function of $S_{k}$ as a gamma distribution with shape parameter $k$ and scale parameter $\frac{1}{\lambda}$, denoted as $\Gamma\left(k, \frac{1}{\lambda}\right)$.</p>
-<p>Remark 1.9. Notice that this is the probability density function of a gamma distribution.</p>
+<p>By taking the inverse Fourier transform, we can find the probability distribution of $ S_k $, which is a gamma distribution with shape parameter $ k $ and scale parameter $ \frac{1}{\lambda} $, denoted as $ \Gamma(k, \frac{1}{\lambda}) $.</p>
+<p>Thus, $ S_k $ has a gamma distribution with shape parameter $ k $ and scale parameter $ \frac{1}{\lambda} $, denoted as $ \Gamma(k, \frac{1}{\lambda}) $.</p>
+<h3 id="remark-19">Remark 1.9</h3>
+<p>This is the probability density function of a gamma distribution.</p>
 <h2 id="2-generalized-poisson-process">§2 Generalized Poisson Process</h2>
-<h2 id="21-non-homogeneous-poisson-process">§2.1 Non-homogeneous Poisson Process</h2>
-<p>We can generalize the Poisson process by relaxing some of its conditions. Recall the definition of a Poisson process, which has three essential assumptions. Let&rsquo;s start by considering the stationary condition:</p>
-<p>Question 2.1. In the basic Poisson process, where do we use the stationary condition?</p>
-<p>Since we don&rsquo;t have the stationary condition, we need to make the following assumption:</p>
+<h3 id="21-non-homogeneous-poisson-process">§2.1 Non-homogeneous Poisson Process</h3>
+<p>We can generalize the Poisson process by relaxing some of its conditions. Recall the definition of a Poisson process, which has three key assumptions. Let&rsquo;s start by considering the stationary condition:</p>
+<h3 id="question-21">Question 2.1</h3>
+<p>In the basic Poisson process, where do we use the stationary condition?</p>
+<p>Since we no longer assume stationarity, we make the following assumption:</p>
 <p>$$
-\lim _{\Delta t \rightarrow 0} \frac{P(N(t+\Delta t)-N(t)=0)-1}{\Delta t}=-\lambda(t) \text { as } \Delta t \rightarrow 0
+\lim_{\Delta t \to 0} \frac{P(N(t + \Delta t) - N(t) = 0) - 1}{\Delta t} = -\lambda(t) \quad \text{as} \quad \Delta t \to 0
 $$</p>
-<p>The left-hand side is the same as before, but now we need to solve the following differential equation:</p>
+<p>Now, we need to solve the following differential equation:</p>
 <p>$$
-\begin{aligned}
-&amp; \left{\begin{array}{l}
-\frac{d}{d t} G_{N(t)}(z)=G_{N(t)}(z) \cdot \lambda(t)(z-1) \
-G_{N(0)}(z)=1
-\end{array}\right. \
-&amp; \Rightarrow G_{N(t)}(z)=\exp \left{\int_{0}^{t} \lambda(s) d s(z-1)\right}
-\end{aligned}
+\frac{d}{dt} G_{N(t)}(z) = G_{N(t)}(z) \cdot \lambda(t)(z - 1)
 $$</p>
-<p>Remark 2.2. After we loosen the stationary condition, $N(t)$ still has a Poisson distribution with mean $\int_{0}^{t} \lambda(s) d s$. We call this a non-homogeneous Poisson process.</p>
-<p>Now, let&rsquo;s consider another situation. Let $Z_{1}, \cdots, Z_{n}$ be i.i.d. and $Y(t)=\sum_{k=1}^{N(t)} Z_{k}$.</p>
 <p>$$
-\begin{aligned}
-&amp; G_{Y(t)}(z)=E\left(z^{Y(t)}\right) \
-&amp; =E_{N(t)}\left(\left(E\left(z^{Z_{k}}\right)\right)^{N(t)}\right) \
-&amp; =G_{N(t)}\left(G_{Z}(z)\right) \
-&amp; =\exp \left{\lambda t\left(G_{Z}(z)-1\right)\right}
-\end{aligned}
+G_{N(0)}(z) = 1
 $$</p>
-<p>Remark 2.3. $N(t) Z_{1}$ are seemingly different stochastic variables, but they have the same expression!</p>
-<p>Example 2.4</p>
-<p>As an example of thinning, suppose $X_{k}=\left{\begin{array}{cc}0 &amp; 1-p \ 1 &amp; p\end{array}\right.$</p>
+<p>Thus, we find:</p>
 <p>$$
-\begin{aligned}
-Y(t) &amp; =\sum_{k=1}^{N(t)} X_{k} \
-G_{Z}(z) &amp; =p z+(1-p)
-\end{aligned}
+G_{N(t)}(z) = \exp\left( \int_0^t \lambda(s) ds \cdot (z - 1) \right)
 $$</p>
-<p>Then</p>
+<h3 id="remark-22">Remark 2.2</h3>
+<p>After relaxing the stationarity condition, $ N(t) $ still follows a Poisson distribution with mean $ \int_0^t \lambda(s) ds $. This is called a non-homogeneous Poisson process.</p>
+<p>Now, consider another situation. Let $ Z_1, Z_2, \dots, Z_n $ be i.i.d. random variables, and let $ Y(t) = \sum_{k=1}^{N(t)} Z_k $.</p>
 <p>$$
-G_{Y(t)}=\exp {\lambda t(p(z-1))}
+G_{Y(t)}(z) = E\left( z^{Y(t)} \right)
 $$</p>
-<p>This means that $Y(t)$ is still a Poisson process.</p>
-<h2 id="example-25">Example 2.5</h2>
-<p>As another example, suppose there are two independent Poisson processes $N_{1}(t) \sim \lambda_{1}$ and $N_{2}(t) \sim \lambda_{2}$, then $\left(N_{1}(t)+N_{2}(t)\right)_{t}$ is a Poisson process.</p>
 <p>$$
-\begin{aligned}
-G_{N_{1}(t)+N_{2}(t)}(z) &amp; =E\left(z^{N_{1}(t)+N_{2}(t)}\right) \
-&amp; =G_{N_{1}(t)}(z) \cdot G_{N_{2}(t)}(z) \
-&amp; =\exp \left(\lambda_{1} t(z-1)-\lambda_{2} t(z-1)\right) \
-&amp; =\exp \left(\left(\lambda_{1}+\lambda_{2}\right) t(z-1)\right)
-\end{aligned}
+= E_{N(t)} \left( \left( E\left( z^{Z_k} \right) \right)^{N(t)} \right)
 $$</p>
-<p>Question 2.6. But what about $N_{1}(t)-N_{2}(t)$ ? Is it still a Poisson process?</p>
-<p>Solution 2.7. No, since $P\left(N_{1}(t)-N_{2}(t)&lt;0\right) \neq 0$, it&rsquo;s not a Poisson process.</p>
-<h2 id="example-28">Example 2.8</h2>
-<p>Now let&rsquo;s consider the difference between two independent Poisson processes $N_{1}(t)$ and $N_{2}(t)$. We want to find the distribution of $N_{1}(t)-N_{2}(t)$.</p>
-<p>To do this, we can calculate the moment generating function of $N_{1}(t)-N_{2}(t)$ as follows:</p>
 <p>$$
-\begin{aligned}
-G_{N_{1}(t)-N_{2}(t)}(z) &amp; =E\left(z^{N_{1}(t)-N_{2}(t)}\right) \
-&amp; =E\left(z^{N_{1}(t)}\right) \cdot E\left(\left(\frac{1}{z}\right)^{N_{2}(t)}\right) \
-&amp; =\exp \left(\lambda_{1}(z-1)\right) \cdot \exp \left(-\lambda_{2}\left(\frac{1}{z}-1\right)\right) \
-&amp; =\exp \left(t\left(\lambda_{1}(z-1)-\lambda_{2}\left(\frac{1}{z}-1\right)\right)\right) \
-&amp; =\exp \left(t\left(\lambda_{1}+\lambda_{2}\right)\left(\frac{\lambda_{1}}{\lambda_{1}+\lambda_{2}} \cdot z+\frac{\lambda_{2}}{\lambda_{1}+\lambda_{2}} \cdot \frac{1}{z}\right)\right)
-\end{aligned}
+= G_{N(t)}\left( G_Z(z) \right)
 $$</p>
-<p>We can see that the moment generating function of $N_{1}(t)-N_{2}(t)$ has a similar form to that of a non-homogeneous Poisson process with rate parameter $\lambda(t)=\lambda_{1}-\lambda_{2}$. Therefore, $N_{1}(t)-N_{2}(t)$ is not a Poisson process itself, but it has a similar distribution to a non-homogeneous Poisson process with the rate parameter $\lambda(t)=\lambda_{1}-\lambda_{2}$.</p>
-<p>Question 2.9. Consider two independent Poisson processes $N_{1}(t)$ and $N_{2}(t)$ with rate parameters $\lambda_{1}$ and $\lambda_{2}$, respectively. Let $X$ be a random variable that takes on the values 1 and -1 with probabilities $\frac{\lambda_{1}}{\lambda_{1}+\lambda_{2}}$ and $\frac{\lambda_{2}}{\lambda_{1}+\lambda_{2}}$, respectively. Explain how the process $N_{1}(t)-N_{2}(t)$ is formed based on the random variable $X$.</p>
+<p>$$
+= \exp \left( \lambda t \left( G_Z(z) - 1 \right) \right)
+$$</p>
+<h3 id="remark-23">Remark 2.3</h3>
+<p>Although $ N(t) Z_1 $ seems different from the general Poisson process, it shares the same mathematical structure!</p>
+<h3 id="example-24-thinning">Example 2.4 (Thinning)</h3>
+<p>Consider the following thinning example:</p>
+<p>$$
+X_k = \begin{cases}
+0 &amp; \text{with probability } 1 - p \
+1 &amp; \text{with probability } p
+\end{cases}
+$$</p>
+<p>Thus,</p>
+<p>$$
+Y(t) = \sum_{k=1}^{N(t)} X_k
+$$</p>
+<p>$$
+G_Z(z) = pz + (1 - p)
+$$</p>
+<p>$$
+G_{Y(t)}(z) = \exp \left( \lambda t p (z - 1) \right)
+$$</p>
+<p>This means that $ Y(t) $ is still a Poisson process.</p>
+<h3 id="example-25-superposition-of-poisson-processes">Example 2.5 (Superposition of Poisson Processes)</h3>
+<p>Consider two independent Poisson processes, $ N_1(t) \sim \lambda_1 $ and $ N_2(t) \sim \lambda_2 $. The process $ \left( N_1(t) + N_2(t) \right)_t $ is also a Poisson process.</p>
+<p>$$
+G_{N_1(t) + N_2(t)}(z) = E\left( z^{N_1(t) + N_2(t)} \right)
+$$</p>
+<p>$$
+= G_{N_1(t)}(z) \cdot G_{N_2(t)}(z)
+$$</p>
+<p>$$
+= \exp \left( \lambda_1 t (z - 1) \right) \cdot \exp \left( \lambda_2 t (z - 1) \right)
+$$</p>
+<p>$$
+= \exp \left( (\lambda_1 + \lambda_2) t (z - 1) \right)
+$$</p>
+<h3 id="question-26">Question 2.6</h3>
+<p>What about $ N_1(t) - N_2(t) $? Is it still a Poisson process?</p>
+<h3 id="solution-27">Solution 2.7</h3>
+<p>No, because $ P(N_1(t) - N_2(t) &lt; 0) \neq 0 $. Therefore, it’s not a Poisson process.</p>
+<h3 id="example-28-difference-of-two-poisson-processes">Example 2.8 (Difference of Two Poisson Processes)</h3>
+<p>Now, let’s consider the difference between two independent Poisson processes $ N_1(t) $ and $ N_2(t) $. We want to find the distribution of $ N_1(t) - N_2(t) $.</p>
+<p>The moment generating function of $ N_1(t) - N_2(t) $ can be calculated as follows:</p>
+<p>$$
+G_{N_1(t) - N_2(t)}(z) = E\left( z^{N_1(t) - N_2(t)} \right)
+$$</p>
+<p>$$
+= E\left( z^{N_1(t)} \right) \cdot E\left( \left( \frac{1}{z} \right)^{N_2(t)} \right)
+$$</p>
+<p>$$
+= \exp\left( \lambda_1 (z - 1) \right) \cdot \exp\left( -\lambda_2 \left( \frac{1}{z} - 1 \right) \right)
+$$</p>
+<p>$$
+= \exp\left( t \left( \lambda_1 (z - 1) - \lambda_2 \left( \frac{1}{z} - 1 \right) \right) \right)
+$$</p>
+<p>We see that $ N_1(t) - N_2(t) $ does not follow a Poisson distribution, but it has a distribution similar to a non-homogeneous Poisson process with rate parameter $ \lambda(t) = \lambda_1 - \lambda_2 $.</p>
+<h3 id="question-29">Question 2.9</h3>
+<p>Consider two independent Poisson processes $ N_1(t) $ and $ N_2(t) $ with rate parameters $ \lambda_1 $ and $ \lambda_2 $, respectively. Let $ X $ be a random variable that takes the values 1 and -1 with probabilities $ \frac{\lambda_1}{\lambda_1 + \lambda_2} $ and $ \frac{\lambda_2}{\lambda_1 + \lambda_2} $, respectively. Explain how the process $ N_1(t) - N_2(t) $ is formed based on the random variable $ X $.</p>
 <h2 id="22-compound-poisson-process">§2.2 Compound Poisson Process</h2>
-<p>Consider a sequence of random variables $(N(\Delta t))<em>{t \geq 0}$ representing the number of events that occur in a time interval of length $\Delta t$. Let $\lambda</em>{k}=\lim _{\Delta t \rightarrow 0} \frac{P(N(\Delta t)=k)}{P(N(\Delta t)&gt;0)}$ denote the probability of observing $k$ events in an infinitesimal time interval. Then, as $\Delta t \rightarrow 0$, we have:</p>
+<p>Consider a sequence of random variables $ (N(\Delta t))<em>{t \geq 0} $, representing the number of events in a time interval $ \Delta t $. Let $ \lambda_k = \lim</em>{\Delta t \to 0} \frac{P(N(\Delta t) = k)}{P(N(\Delta t) &gt; 0)} $, the probability of observing $ k $ events in an infinitesimal interval. As $ \Delta t \to 0 $, we have:</p>
 <p>$$
-\frac{P(N(\Delta t)=0)-1}{\Delta t} \longrightarrow-\lambda
+\frac{P(N(\Delta t) = 0) - 1}{\Delta t} \to -\lambda
 $$</p>
-<p>and</p>
 <p>$$
-\frac{P(N(\Delta t)&gt;0)}{\Delta t} \longrightarrow \lambda
+\frac{P(N(\Delta t) &gt; 0)}{\Delta t} \to \lambda
 $$</p>
-<p>where $\lambda=\lim _{\Delta t \rightarrow 0} \frac{\mathbb{E}[N(\Delta t)]}{\Delta t}$ is the intensity of the Poisson process.</p>
-<p>Moreover, we have:</p>
+<p>where $ \lambda = \lim_{\Delta t \to 0} \frac{\mathbb{E}[N(\Delta t)]}{\Delta t} $ is the intensity of the Poisson process.</p>
+<p>Furthermore:</p>
 <p>$$
-\frac{\mathbb{E}\left[z^{N(\Delta t)}-1\right]}{\Delta t} \longrightarrow-\lambda+\lambda\left(\sum_{k \geq 1} \lambda_{k} z^{k}\right)
+\frac{\mathbb{E}\left[ z^{N(\Delta t)} - 1 \right]}{\Delta t} \to -\lambda + \lambda \left( \sum_{k \geq 1} \lambda_k z^k \right)
 $$</p>
-<p>Let $P(z)=\sum_{k \geq 1} \lambda_{k} z^{k}$ denote the probability generating function of $N(\Delta t)$, and let $G_{z}(z)=\sum_{k \geq 0} \lambda_{k} z^{k}$ denote its moment generating function. Then, we have:</p>
+<p>Let $ P(z) = \sum_{k \geq 1} \lambda_k z^k $ denote the probability generating function of $ N(\Delta t) $, and let $ G_z(z) = \sum_{k \geq 0} \lambda_k z^k $ denote its moment generating function. Then:</p>
 <p>$$
-G_{N(t)}(z)=\exp (\lambda(t)(P(z)-1))
+G_{N(t)}(z) = \exp\left( \lambda(t)(P(z) - 1) \right)
 $$</p>
-<p>where $\lambda(t)$ is the time-varying intensity of the non-homogeneous Poisson process.</p>
-<p>To compare non-homogeneous Poisson processes and compound Poisson processes, we have:</p>
+<p>where $ \lambda(t) $ is the time-varying intensity of the non-homogeneous Poisson process.</p>
+<p>In comparison, for compound Poisson processes:</p>
 <p>$$
-G_{N(t)}(z)=\exp \left(\lambda(t)\left(G_{z}(z)-1\right)\right)
+G_{N(t)}(z) = \exp\left( \lambda(t)\left( G_z(z) - 1 \right) \right)
 $$</p>
-<p>where $G_{z}(z)$ is the moment generating function of the compound Poisson process.</p>
 <h2 id="23-filtered-poisson-process">§2.3 Filtered Poisson Process</h2>
-<p>To generalize Poisson processes by loosening independent increment, consider the example of a Poisson process $N(t)$ with events $T_{1}, T_{2}, \cdots, T_{4}$ and inter-event times $S_{1}, S_{2}, \cdots, S_{4}$. Then, $E\left(S_{4} \mid N(1)=2\right)$ can be found as:</p>
+<p>To generalize Poisson processes by loosening the independent increment assumption, consider the following example: a Poisson process $ N(t) $ with events $ T_1, T_2, T_3, T_4 $ and inter-event times $ S_1, S_2, S_3, S_4 $. The expected value $ E(S_4 \mid N(1) = 2) $ can be calculated as follows:</p>
 <p>$$
-\begin{aligned}
-F_{S_{4}}(t \mid N(1)=2) &amp; =P\left(S_{4} \leqslant t \mid N(1)=2\right) \
-&amp; =P(N(t) \geqslant 4 \mid N(1)=2) \
-&amp; =\frac{P(N(1)=2 ; N(t)-N(1) \geqslant 2)}{P(N(1)=2)} \
-&amp; =P(N(t-1) \geqslant 2) \
-&amp; =1-\exp (-\lambda(t-1))-\lambda(t-1) \exp (-\lambda(t-1)) \
-f_{S_{4}}(t \mid N(1)=2)=\lambda &amp; \exp (-\lambda(t-1))-(\lambda+\lambda(t-1) \cdot(-\lambda)) \exp (-\lambda(t-1)) \
-=\lambda^{2} &amp; (t-1) \exp (-\lambda(t-1)) \quad(t \geqslant 1) \
-E\left(S_{4} \mid N(1)=2\right) &amp; =\int_{1}^{\infty} t f_{S_{4}}(t \mid N(1)=2) d t \
-&amp; =\int_{1}^{\infty} \lambda^{2} t(t-1) \exp (-\lambda(t-1)) d t \
-&amp; =\int_{0}^{\infty} \lambda^{2} x(x+1) \exp (-\lambda x) d x \
-&amp; =\lambda\left(E(\operatorname{Exp}(\lambda))+\operatorname{Var}(\operatorname{Exp}(\lambda))+\sqrt{(\operatorname{Exp}(\lambda)))^{2}}\right. \
-&amp; =\lambda\left(\frac{1}{\lambda}+\frac{1}{x^{2}}+\frac{1}{x^{2}}\right)=1+\frac{2}{\lambda}
-\end{aligned}
+F_{S_4}(t \mid N(1) = 2) = P(S_4 \leq t \mid N(1) = 2)
 $$</p>
-<p>Question 2.10. Now there is a way to solve this problem. Is there any problem with this argument? You can refer to the Inspection Paradox.</p>
-<p>Remark 2.11. It&rsquo;s true that $S_{4}-S_{3}=T_{3}$ is exponentially distributed. However, why is $S_{3}-1$ still exponentially distributed?</p>
+<p>$$
+= P(N(t) \geq 4 \mid N(1) = 2)
+$$</p>
+<p>$$
+= \frac{P(N(1) = 2; N(t) - N(1) \geq 2)}{P(N(1) = 2)}
+$$</p>
+<p>$$
+= P(N(t - 1) \geq 2)
+$$</p>
+<p>$$
+= 1 - \exp(-\lambda(t - 1)) - \lambda(t - 1) \exp(-\lambda(t - 1))
+$$</p>
+<p>The density function is:</p>
+<p>$$
+f_{S_4}(t \mid N(1) = 2) = \lambda^2(t - 1) \exp(-\lambda(t - 1)) \quad (t \geq 1)
+$$</p>
+<p>The expected value $ E(S_4 \mid N(1) = 2) $ is:</p>
+<p>$$
+E(S_4 \mid N(1) = 2) = \int_1^\infty t f_{S_4}(t \mid N(1) = 2) dt
+$$</p>
+<p>$$
+= \int_1^\infty \lambda^2 t(t - 1) \exp(-\lambda(t - 1)) dt
+$$</p>
+<p>$$
+= \int_0^\infty \lambda^2 x(x + 1) \exp(-\lambda x) dx
+$$</p>
+<p>$$
+= \lambda\left(E(\text{Exp}(\lambda)) + \text{Var}(\text{Exp}(\lambda)) + \left(E(\text{Exp}(\lambda))\right)^2\right)
+$$</p>
+<p>$$
+= \lambda\left(\frac{1}{\lambda} + \frac{1}{\lambda^2} + \frac{1}{\lambda^2}\right) = 1 + \frac{2}{\lambda}
+$$</p>
+<h3 id="question-210">Question 2.10</h3>
+<p>Is there a problem with this argument? You can refer to the Inspection Paradox.</p>
+<h3 id="remark-211">Remark 2.11</h3>
+<p>While it is true that $ S_4 - S_3 = T_3 $ is exponentially distributed, why is $ S_3 - 1 $ still exponentially distributed?</p>
 <p>Consider the following calculations:</p>
 <p>$$
-\begin{aligned}
-&amp; F_{S_{1}}(x \mid N(t)=1)=P\left(S_{3}\right.\leq x \mid N(t)=1) \
-&amp;=P(N(x)=1 \mid N(t)=1) \
-&amp;=\frac{P(N(x)=1, N(t-x)=0)}{P(N(t)=1)} \
-&amp;=\frac{x}{t} \
-&amp; \Rightarrow f_{S}(x \mid N(t)=1)=\frac{d}{d t} F_{S}(x \mid N(t)=1)=\frac{1}{t}
-\end{aligned}
+F_{S_1}(x \mid N(t) = 1) = P(S_1 \leq x \mid N(t) = 1)
 $$</p>
-<p>Thus, $\left.S\right|_{N(t)=1} \sim U(0, t)$.</p>
-<p>Similarly, we can use &ldquo;Micro-cell&rdquo; to find:</p>
 <p>$$
-\begin{aligned}
-&amp; P\left(N\left(t-\Delta x_{1}-\Delta x_{2}\right)=0, N\left(\Delta x_{1}\right)=1, N\left(\Delta x_{2}\right)=1 \mid N(t)=2\right) \
-&amp; =\lambda^{2} \Delta x_{1} \Delta x_{2} / \frac{(\lambda t)^{2}}{2} \
-&amp; \Rightarrow f_{s_{11}, s_{2}}\left(x_{1}, x_{2}\right)=\frac{2}{t^{2}}\left(0 \leq x_{1} \leq x_{2} \leq t\right)
-\end{aligned}
+= P(N(x) = 1 \mid N(t) = 1)
 $$</p>
-<p>Remark 2.12. There is an intrinsic relationship between $x_{1}$ and $x_{2}$.</p>
-<p>We lose independent increments in a filtered Poisson process.</p>
-<p>Recall that for a non-homogeneous and compound Poisson process, we have</p>
 <p>$$
-X(t)=\sum_{k=1}^{N(t)} Z_{k}\left(t, S_{k}, Z_{k}\right)
+= \frac{P(N(x) = 1, N(t - x) = 0)}{P(N(t) = 1)}
 $$</p>
-<p>where $N(t)$ is the counting process and $Z_{k}\left(t, S_{k}, Z_{k}\right)$ is the $k$ th jump of the process at time $t$ with size $Z_{k}$ and location $S_{k}$.</p>
-<p>To study this process, we use the characteristic function:</p>
 <p>$$
-\begin{aligned}
-\phi_{Z(t)}(\omega) &amp; =E\left[\exp \left(j \omega Z_{(t)}\right)\right] \
-&amp; =E_{N(t)}\left[\prod_{i=1}^{N(t)} E\left[\exp \left(j \omega Z_{k}\left(t, S_{k}, Z_{k}\right)\right) \mid N(t)\right]\right] .
-\end{aligned}
+= \frac{x}{t}
 $$</p>
-<p>Let $B\left(t, S_{k}\right)=-\left[\exp \left(j \omega Z_{k}\left(t, S_{k}, Z_{k}\right)\right)\right]$ be the characteristic function of the jump. Then, we have</p>
+<p>Therefore, the density function is:</p>
 <p>$$
-\begin{aligned}
-\phi_{Z(t)}(\omega) &amp; =E_{N(t)}\left[\left(\int_{0 \leq S_{1} \leq \ldots \leq S_{n} \leq t} \prod_{i=1}^{n} B\left(t, S_{k}\right) \frac{n !}{t^{n}} d s_{1} \ldots d s_{n}\right)^{N(t)}\right] \
-&amp; =E_{N(t)}\left[\left(\frac{1}{t} \int_{0}^{t} B(t, s) d s\right)^{N(t)}\right] \
-&amp; =\exp \left(-\lambda\left(\int_{0}^{t} B(t, s)-1 d s\right)\right) \
-&amp; =\exp \left(-\lambda \int_{0}^{t} E[\exp (j \omega Z(t, s))-1] d s\right),
-\end{aligned}
+f_{S_1}(x \mid N(t) = 1) = \frac{d}{dx} F_{S_1}(x \mid N(t) = 1) = \frac{1}{t}
 $$</p>
-<p>where $\lambda$ is the intensity of the process.</p>
-<p>We call this type of process a filtered Poisson process.</p>
-<p>Finally, we have</p>
+<p>Thus, $ S_1 \mid N(t) = 1 \sim U(0, t) $ (uniform distribution).</p>
+<p>Similarly, for two increments, we have:</p>
 <p>$$
-\begin{aligned}
-E(Z(t)) &amp; =\frac{1}{j} \phi_{z}^{\prime}(\omega) / \omega=0 \
-&amp; =\frac{1}{j}\left(-\lambda \int_{0}^{t} \int_{-\infty}^{+\infty} j Z_{(t, s)} \exp \left(j \omega, Z(T, s) f_{Z(r, 1} d t \cdot d s\right)\right. \
-&amp; =\lambda \int_{0}^{t} E(Z(t, s)) d s
-\end{aligned}
+P(N(t - \Delta x_1 - \Delta x_2) = 0, N(\Delta x_1) = 1, N(\Delta x_2) = 1 \mid N(t) = 2) = \frac{\lambda^2 \Delta x_1 \Delta x_2}{\frac{(\lambda t)^2}{2}}
 $$</p>
-<p>where $Z(t, s)$ is the jump size at time $t$ with location $s$ and $f_{Z(r, 1)}$ is the joint density function of the jump size and the location.</p>
-<p>Consider a bus stop with operating hours $[0, T]$, where $n$ buses are scheduled to arrive at the stop at times $T_{1}, T_{2}, \ldots, T_{n}$ in order to minimize the total waiting time of passengers. Let us assume that passengers arrive at the bus stop according to a Poisson process with rate $\lambda$, and the buses have infinite capacity.</p>
-<p>During the interval $\left[0, T_{1}\right]$, the total waiting time of the passengers can be expressed as:</p>
+<p>This gives the joint density:</p>
 <p>$$
-W_{1}=\sum_{k=1}^{N\left(T_{1}\right)}\left(T_{1}-S_{k}\right)
+f_{S_1, S_2}(x_1, x_2) = \frac{2}{t^2} \quad (0 \leq x_1 \leq x_2 \leq t)
 $$</p>
-<p>where $N\left(T_{1}\right)$ is the number of passengers that arrive in the time interval $\left[0, T_{1}\right]$, and $S_{k}$ is the arrival time of the $k$-th passenger.</p>
-<p>Taking the expected value of $W_{1}$ with respect to the number of passengers $N\left(T_{1}\right)$, we get:</p>
+<h3 id="remark-212">Remark 2.12</h3>
+<p>There is an intrinsic relationship between $ x_1 $ and $ x_2 $, which causes us to lose independent increments in a filtered Poisson process.</p>
+<p>Recall that for a non-homogeneous and compound Poisson process:</p>
 <p>$$
-\begin{aligned}
-E\left[W_{1}\right] &amp; =E_{N\left(T_{1}\right)}\left[\sum_{k=1}^{N\left(T_{1}\right)} E\left[T_{1}-S_{k}\right]\right] \
-&amp; =E_{N\left(T_{1}\right)}\left[N\left(T_{1}\right) \cdot T_{1}-\sum_{k=1}^{N\left(T_{1}\right)} E\left[S_{k}\right] \mid N\left(T_{1}\right)=n\right] \
-&amp; =\frac{\lambda T_{1}}{2} \cdot T_{1}=\frac{1}{2} \lambda T_{1}^{2},
-\end{aligned}
+X(t) = \sum_{k=1}^{N(t)} Z_k(t, S_k, Z_k)
 $$</p>
-<p>where the last equality holds because $E\left[N\left(T_{1}\right)\right]=\lambda T_{1}$ and $E\left[S_{k}\right]=T_{1} / 2$ (since the passengers arrive uniformly over the interval $\left.\left[0, T_{1}\right]\right)$.</p>
-<p>Therefore, the total expected waiting time for all passengers can be expressed as:</p>
+<p>where $ N(t) $ is the counting process and $ Z_k(t, S_k, Z_k) $ represents the $ k $-th jump of the process at time $ t $ with jump size $ Z_k $ and location $ S_k $.</p>
+<p>We study this process using its characteristic function:</p>
 <p>$$
-T=E\left[\sum_{i=1}^{n} W_{i}\right]=E\left[\sum_{i=1}^{n} \sum_{k=1}^{N\left(T_{i}\right)}\left(T_{i}-S_{k}\right)\right]
+\phi_{Z(t)}(\omega) = E\left[\exp(j \omega Z(t))\right]
 $$</p>
-<p>which simplifies to:</p>
 <p>$$
-T=\frac{1}{2} \lambda\left(T_{1}^{2}+T_{2}^{2}+\cdots+T_{n}^{2}\right)
+= E_{N(t)}\left[\prod_{i=1}^{N(t)} E\left[\exp(j \omega Z_k(t, S_k, Z_k)) \mid N(t)\right]\right]
 $$</p>
-<p>Since we want to minimize the total waiting time, we need to minimize $T$ subject to the constraint that $T_{1}+T_{2}+\cdots+T_{n}=T$. Using Lagrange multipliers, we can show that the optimal solution is $T_{1}=T_{2}=\cdots=T_{n}=T / n$.</p>
-<p>Therefore, the optimal scheduling of the buses is to have them arrive at equal intervals of $T / n$.</p>
-<p>Consider the Cramér-Lundberg model for insurance risk, where $V(t)$ denotes the surplus of an insurance company at time $t$ and is given by:</p>
+<p>Let $ B(t, S_k) = \exp(j \omega Z_k(t, S_k, Z_k)) $ be the characteristic function of the jumps. Then,</p>
 <p>$$
-V(t)=V_{0}+c(t)-\sum_{k=1}^{N(t)} Z_{k} \exp \left(-\alpha\left(t-\tau_{k}\right)\right)
+\phi_{Z(t)}(\omega) = E_{N(t)}\left[\left(\frac{1}{t} \int_0^t B(t, s) ds\right)^{N(t)}\right]
 $$</p>
-<p>where $V_{0}$ is the initial surplus, $c(t)$ is the rate of premium income, $N(t)$ is a Poisson process with rate $\lambda, \tau_{k}$ is the claim arrival time of the $k$-th claim, $Z_{k}$ is the size of the $k$-th claim, and $\alpha$ is a constant parameter.</p>
-<p>Let us define $Y(t)=\sum_{k=1}^{N(t)} Z_{k} \exp \left(\alpha \tau_{k}\right)$, which represents the total discounted claim amount up to time $t$.</p>
-<p>Taking the expected value of $Y(T)$, we have:</p>
 <p>$$
-\begin{aligned}
-E[Y(T)] &amp; =E_{N(t),\left{\tau_{k}, Z_{k}\right}}\left[\sum_{k=1}^{N(t)} Z_{k} \exp \left(\alpha \tau_{k}\right)\right] \
-&amp; =E_{N(t)}\left[\sum_{k=1}^{n} \exp \left(\alpha \tau_{k}\right) E_{\mathbb{R}<em>{k}}\left[Z</em>{k}\right] \mid N(t)=n\right] \
-&amp; =E_{N(+),\left{\tau_{k}, Z_{k}\right}}\left[E_{\tau_{1}} \cdot \tau_{n}\left(\sum_{k=1}^{n} \exp \left(\alpha \tau_{k}\right) E\left[Z_{k} \mid \mathbb{Z}\right] \mid N(t)=n\right)\right]
-\end{aligned}
+= \exp\left(-\lambda \int_0^t \left(E[\exp(j \omega Z(t, s)) - 1]\right) ds\right)
 $$</p>
-<p>where $\mathbb{Z}$ denotes the set of all $Z_{k}$ &rsquo;s and $\lambda=E[N(t)] / t$.</p>
-<p>Therefore, the expected total discounted claim amount up to time $T$ can be calculated using the above formula, which involves computing the expected claim size and expected claim arrival time, both conditioned on the number of claims that have arrived up to time $t$.</p>
-<p>Consider the $M / M / K$ queuing model with general service time distribution $G$ and Poisson arrival process with rate $\lambda$. Let $\mathbb{Z}_{(t)}$ denote the total number of customers that have been served up to time $t$.</p>
-<p>Using the memory-less property of the Poisson process, we can show that the number of customers that arrive during the interval $[t-s, t]$ is distributed according to a Poisson distribution with mean $\lambda s$. Therefore, the expected number of customers that arrive during this interval is $\lambda s$.</p>
-<p>Using this result, we can express the expected value of $\mathbb{Z}_{(t)}$ as:</p>
+<p>where $ \lambda $ is the intensity of the process. This type of process is called a filtered Poisson process.</p>
+<p>Finally, we have:</p>
 <p>$$
-\begin{aligned}
-E\left[\mathbb{Z}<em>{(t)}\right] &amp; =E\left[\sum</em>{k=1}^{N(t)} I\left(t, \tau_{k}\right)\right] \
-&amp; =E\left[\int_{0}^{t} \sum_{k=1}^{N(t)} I\left(t, \tau_{k}\right) \cdot \delta_{\tau_{k}}(s) d s\right] \
-&amp; =\lambda \int_{0}^{t} E[I(t, s)] \cdot(t-s) d s,
-\end{aligned}
+E(Z(t)) = \lambda \int_0^t E(Z(t, s)) ds
 $$</p>
-<p>where $I(t, s)$ is the indicator function that takes the value 1 if a customer that arrives at time $s$ is served before time $t$, and 0 otherwise.</p>
-<p>Since the service time distribution is general, we cannot compute $E[I(t, s)]$ exactly. However, we can use the fact that the service time distribution is memoryless to obtain an approximation for $E[I(t, s)]$. Specifically, we have:</p>
+<p>where $ Z(t, s) $ is the jump size at time $ t $ with location $ s $.</p>
+<h3 id="example-poisson-process-at-a-bus-stop">Example: Poisson Process at a Bus Stop</h3>
+<p>Consider a bus stop with operating hours $ [0, T] $, where $ n $ buses are scheduled to arrive at times $ T_1, T_2, \dots, T_n $, aiming to minimize the total waiting time of passengers. Let passengers arrive according to a Poisson process with rate $ \lambda $, and assume the buses have infinite capacity.</p>
+<p>The total waiting time for passengers in the interval $ [0, T_1] $ is:</p>
 <p>$$
-E[I(t, s)] \approx 1-F_{T}(t-s)
+W_1 = \sum_{k=1}^{N(T_1)} (T_1 - S_k)
 $$</p>
-<p>where $F_{T}$ is the cumulative distribution function of the service time distribution $G$.</p>
-<p>Substituting this approximation into the above expression for $E\left[\mathbb{Z}_{(t)}\right]$, we get:</p>
+<p>where $ N(T_1) $ is the number of passengers arriving in the interval, and $ S_k $ is the arrival time of the $ k $-th passenger. The expected waiting time is:</p>
 <p>$$
-E\left[\mathbb{Z}<em>{(t)}\right] \approx \lambda \int</em>{0}^{t}\left(1-F_{T}(t-s)\right) \cdot(t-s) d s
+E[W_1] = E_{N(T_1)}\left[N(T_1) \cdot T_1 - \sum_{k=1}^{N(T_1)} E[S_k \mid N(T_1) = n]\right]
 $$</p>
-<p>This provides an approximation for the expected number of customers that have been served up to time $t$ in the $M / M / K$ queuing model with general service time distribution.</p>
+<p>$$
+= \frac{\lambda T_1}{2} \cdot T_1 = \frac{1}{2} \lambda T_1^2
+$$</p>
+<p>Thus, the total expected waiting time is:</p>
+<p>$$
+T = E\left[\sum_{i=1}^{n} W_i\right] = \frac{1}{2} \lambda (T_1^2 + T_2^2 + \dots + T_n^2)
+$$</p>
+<p>To minimize the total waiting time, we minimize $ T $ subject to $ T_1 + T_2 + \dots + T_n = T $. Using Lagrange multipliers, the optimal solution is:</p>
+<p>$$
+T_1 = T_2 = \dots = T_n = \frac{T}{n}
+$$</p>
+<p>Thus, the optimal scheduling is to have buses arrive at equal intervals of $ T/n $.</p>
+<h2 id="24-the-cramér-lundberg-model-for-insurance-risk">§2.4 The Cramér-Lundberg Model for Insurance Risk</h2>
+<p>In the Cramér-Lundberg model, $ V(t) $ represents the surplus of an insurance company at time $ t $:</p>
+<p>$$
+V(t) = V_0 + c(t) - \sum_{k=1}^{N(t)} Z_k \exp\left(-\alpha(t - \tau_k)\right)
+$$</p>
+<p>where $ V_0 $ is the initial surplus, $ c(t) $ is the premium income rate, $ N(t) $ is a Poisson process with rate $ \lambda $, $ \tau_k $ is the arrival time of the $ k $-th claim, $ Z_k $ is the size of the $ k $-th claim, and $ \alpha $ is a constant. Define $ Y(t) = \sum_{k=1}^{N(t)} Z_k \exp(\alpha \tau_k) $, representing the total discounted claim amount up to time $ t $.</p>
+<p>The expected total discounted claim amount is:</p>
+<p>$$
+E[Y(T)] = E_{N(t)}\left[\sum_{k=1}^{n} \exp(\alpha \tau_k) E[Z_k \mid N(t) = n]\right]
+$$</p>
+<p>where $ \lambda = \frac{E[N(t)]}{t} $. This formula computes the expected claim size and arrival time, conditioned on the number of claims up to time $ t $.</p>
+<h2 id="25-poisson-process-in-an-mmk-queue">§2.5 Poisson Process in an M/M/K Queue</h2>
+<p>Consider an M/M/K queue with a general service time distribution $ G $ and a Poisson arrival process with rate $ \lambda $. Let $ \mathbb{Z}(t) $ denote the total number of customers served by time $ t $. Due to the memoryless property of the Poisson process, the number of customers arriving during the interval $ [t - s, t] $ follows a Poisson distribution with mean $ \lambda s $.</p>
+<p>The expected number of customers served by time $ t $ is approximated by:</p>
+<p>$$
+E[\mathbb{Z}(t)] = \lambda \int_0^t \left(1 - F_T(t - s)\right) (t - s) ds
+$$</p>
+<p>where $ F_T $ is the cumulative distribution function of the service time distribution $ G $.</p>
 
 			</div>
 
